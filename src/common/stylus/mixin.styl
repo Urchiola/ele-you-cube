@@ -1,0 +1,36 @@
+//  这是使用到 cube-ui 下的mixin.styl
+
+// 样式内引用外联样式(上边框)
+border-btp-1px($color)
+    position relative
+    &::before
+        display: block 
+        position:absolute
+        left: 0
+        top: 0
+        width:100%
+        border-bottom: 1px solid $color
+        content:' '
+// 样式内引用外联样式(下边框)
+border-btm-1px($color) 
+    position relative
+    &:after
+        display: block 
+        position:absolute
+        left:0
+        bottom: 0
+        width:100%
+        z-index: 1
+        border-bottom: 1px solid $color
+        content:' '
+// 取消边框线
+border-none1px(){
+    &:after{
+        display:none
+    }
+}
+// 背景
+bg-image($url)
+    background-image: url($url+"@2x.png")
+    @media(-webkit-min-device-pixel-ratio:3),(-webkit-min-device-pixel-ratio:3)
+        background-image: url($url+"@3x.png")

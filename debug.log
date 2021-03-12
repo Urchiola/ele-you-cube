@@ -1,0 +1,20 @@
+[1015/171750.728:ERROR:settings.cc(320)] Settings magic is not 1129342067
+[1015/172750.743:ERROR:directory_reader_win.cc(43)] FindFirstFile: 系统找不到指定的路径。 (0x3)
+[1016/102816.172:ERROR:directory_reader_win.cc(43)] FindFirstFile: 系统找不到指定的路径。 (0x3)
+[1021/103103.524:ERROR:directory_reader_win.cc(43)] FindFirstFile: 系统找不到指定的路径。 (0x3)
+[1025/121120.399:ERROR:directory_reader_win.cc(43)] FindFirstFile: 系统找不到指定的路径。 (0x3)
+[1025/161920.336:ERROR:directory_reader_win.cc(43)] FindFirstFile: 系统找不到指定的路径。 (0x3)
+[1027/104134.457:ERROR:directory_reader_win.cc(43)] FindFirstFile: 系统找不到指定的路径。 (0x3)
+[1028/221030.206:ERROR:directory_reader_win.cc(43)] FindFirstFile: 系统找不到指定的路径。 (0x3)
+[1030/163821.287:ERROR:directory_reader_win.cc(43)] FindFirstFile: 系统找不到指定的路径。 (0x3)
+[1104/212221.906:ERROR:directory_reader_win.cc(43)] FindFirstFile: 系统找不到指定的路径。 (0x3)
+[1112/103857.132:ERROR:directory_reader_win.cc(43)] FindFirstFile: 系统找不到指定的路径。 (0x3)
+[1112/143240.126:ERROR:process_info.cc(359)] UncheckedAllocate
+[1112/143242.899:ERROR:process_info.cc(359)] UncheckedAllocate
+[1112/143333.861:ERROR:process_info.cc(359)] UncheckedAllocate
+[1112/151330.438:ERROR:directory_reader_win.cc(43)] FindFirstFile: 系统找不到指定的路径。 (0x3)
+[1112/152139.166:ERROR:process_info.cc(359)] UncheckedAllocate
+[1112/155244.430:ERROR:directory_reader_win.cc(43)] FindFirstFile: 系统找不到指定的路径。 (0x3)
+[1112/155927.359:ERROR:process_info.cc(359)] UncheckedAllocate
+[1113/103532.496:ERROR:process_info.cc(359)] UncheckedAllocate
+[1113/103610.084:ERROR:process_info.cc(359)] UncheckedAllocate
