@@ -7,8 +7,11 @@
          <img :src="food.image" alt="">
        </div>
        <div class="introduce">
-         <h3>商品信息</h3>
-         <article class="desc">这是一道好吃的菜</article>
+         <h3>{{curFood.name}}</h3>
+         <article class="desc">
+           <span class="yeshou">{{}}</span>
+           <span class="haoping">{{}}</span>
+         </article>
          <article class="other">
            <div class="Price">
              <span>¥24</span>
@@ -32,8 +35,8 @@ import popupMixins from 'common/mixins/mixins'
 export default {
   name: 'food',
   mixins: [popupMixins],
-  props:{
-    food:{
+  props: {
+    food: {
       type: Object,
       default() {
         return {}
@@ -94,5 +97,5 @@ export default {
       font-weight: 700;
       font-size :14px
       line-height:14px
-      color:#000
+      color:rgb(7,17,27)
 </style>
