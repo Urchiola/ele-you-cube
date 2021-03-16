@@ -9,17 +9,17 @@
        <div class="introduce">
          <h3>{{curFood.name}}</h3>
          <article class="desc">
-           <span class="yeshou">{{}}</span>
-           <span class="haoping">{{}}</span>
+           <span class="yeshou">月售{{curFood.sellCount}}</span>
+           <span class="haoping">好评率{{curFood.rating}}%</span>
          </article>
          <article class="other">
            <div class="Price">
-             <span>¥24</span>
-             <span>¥28</span>
+             <span class="now">¥24</span>
+             <s class="old">¥28</s>
            </div>
            <div class="addDesc">
-             <span class="btnAdd">加入购物车</span>
-             <span class="btnAdd"></span>
+             <span class="btncart">加入购物车</span>
+             <span class="btnBar"></span>
            </div>
          </article>
        </div>
@@ -95,7 +95,45 @@ export default {
     padding:18px
     h3 
       font-weight: 700;
-      font-size :14px
-      line-height:14px
+      font-size :16px
+      line-height:16px
       color:rgb(7,17,27)
+    .desc span 
+      margin-right:12px
+      display :inline-block
+      font-size:10px
+      line-height: 10px
+      color:rgb(147,153,159)
+    .desc .yeshou
+      margin-top:9px
+    .other
+      margin-top:18px
+      position:relative
+      span
+        display:inline-block
+      .now 
+        color:rgb(240,20,20)
+        font-size:14px
+        font-weight: 700 
+        line-height:24px
+        margin-right :14px
+      .old 
+        color:rgb(147,153,159)
+        font-size:10px
+        font-weight: 700 
+        line-height:24px
+      .addDesc
+        position:absolute
+        right:0
+        bottom:0
+        .btncart
+          background-color:rgb(0,160,220)
+          padding:6px 12px
+          border-radius:12px
+          line-height :12px
+          font-size:10px
+          color:rgb(255,255,255)
+        
+        .btnBar
+          font-weight :900
 </style>
