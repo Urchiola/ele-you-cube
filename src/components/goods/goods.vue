@@ -59,7 +59,7 @@
           :label="item.name"
           :title="item.name">
           <ul>
-            <li v-for="(food,index) in item.foods" :key = index @click="selectfood(food)">
+            <li v-for="(food,index) in item.foods" :key = index @click="selectFood(food)">
               <div class="foodlist-Wrap">
                 <div class="icon">
                   <img width="57" height="57" :src="food.icon">
@@ -118,15 +118,16 @@ export default {
       scrollOptions: {
         click: false,
         directionLockThreshold: 0
-      }
+      },
+      selectedFood: {}
     }
   },
   methods: {
     // tabs 点击切换时调用（父->子）
     fetch() {
       // 没有请求过，则请求，并这只flag 为true
-      if(!this.fatched){
-        this.fatched =true
+      if (!this.fatched) {
+        this.fatched = true
         getGoods().then((goods) => {
           this.goods = goods
         })
@@ -139,13 +140,18 @@ export default {
     onAdd(el) {
       this.$refs.shopCart.drop(el)
     },
-    selectfood(food) {
-      window.console.log(food)
-      this.$createFood({
-        $props:{
-          food: food
+    selectFood(food) {
+      // 响应式food,so food赋值给this.selectedFood
+      this.selectedFood = food
+      this._showSelectFood() 
+    },
+    _showSelectFood() {
+      this.foodComp = this.foodComp || this.$createFood({
+        $props: {
+          food: 'selectedFood'
         }
-      }).show()
+      })
+      this.foodComp.show()
     }
   },
   computed: {

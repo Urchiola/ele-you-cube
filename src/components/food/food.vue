@@ -1,29 +1,48 @@
 <template>
   <transition name='slide' >
     <div class="food-wrap" v-show='visible' >
-      <cube-scroll>
-       <div class="foodheader">
-         <span class="callback">&lt;</span>
-         <img :src="food.image" alt="">
-       </div>
-       <div class="introduce">
-         <h3>{{curFood.name}}</h3>
-         <article class="desc">
-           <span class="yeshou">月售{{curFood.sellCount}}</span>
-           <span class="haoping">好评率{{curFood.rating}}%</span>
-         </article>
-         <article class="other">
-           <div class="Price">
-             <span class="now">¥24</span>
-             <s class="old">¥28</s>
-           </div>
-           <div class="addDesc">
-             <span class="btncart">加入购物车</span>
-             <span class="btnBar"></span>
-           </div>
-         </article>
-       </div>
-       <div class="goodsratings"></div>
+      <cube-scroll ref ='scroll'>
+        <div class="foodheader">
+          <span class="callback" @click='hide'>&lt;</span>
+          <img :src="food.image" alt="">
+        </div>
+        <div class="introduce">
+          <h3>{{food.name}}</h3>
+          <article class="desc">
+            <span class="yeshou">月售{{food.sellCount}}</span>
+            <span class="haoping">好评率{{food.rating}}%</span>
+          </article>
+          <article class="other">
+            <div class="Price">
+              <span class="now">¥24</span>
+              <s class="old">¥28</s>
+            </div>
+            <div class="addDesc">
+              <span class="btncart"  v-show="!food.count"  @click="joinCart()">加入购物车</span>
+              <span class="btnBar" v-show="food.count >0" ><CartCtrl :food="food"/></span>
+            </div>
+          </article>
+        </div>
+        <Spitline />
+        <div class="prdcInfo">
+          <h3>商品介绍</h3>
+          <article>{{food.info}}</article>
+        </div>
+        <Spitline />
+        <div class="ratings">
+          <div class="screen">
+            <h3>商品评价</h3>
+            <div class="ratings-opt">
+              <span class="all">全部</span>
+              <span class="good">满意</span>
+              <span class="bad">不满意</span>
+            </div>
+            <div class="ratings-opt-content">
+              <i></i> 只看评价内容
+            </div>
+          </div>
+          <div class="ratings-content"></div>
+        </div>
       </cube-scroll>
     </div>
   </transition>
@@ -32,6 +51,9 @@
 <script>
 // import '' from ''
 import popupMixins from 'common/mixins/mixins'
+import CartCtrl from '../cartCtrl/cartCtrl'
+import Spitline from '../spitLine/spitline'
+const EVENT_SHOW = 'show'
 export default {
   name: 'food',
   mixins: [popupMixins],
@@ -45,18 +67,39 @@ export default {
   },
   data() {
     return {
-      curFood: this.food
     }
   },
+  created() {
+    // 创建时刷新
+    this.$on(EVENT_SHOW,()=>{
+      this.$nextTick(() => {
+        this.$refs.scroll.refresh()
+      })
+    })
+  },
   methods: {
+    joinCart() {
+      if (!this.food.count) {
+        // 添加设置属性, vue的api: this.$set vue才可以观测到
+        this.$set(this.food, 'count', 1)
+      } else {
+        this.food.count++
+      }
+    },
     close() {
       this.visible = true
     }
+    // 小球动画，
+    // onAdd(el) {
+    //   this.$refs.shopCart.drop(el)
+    // }
+  },
+  components: {
+    CartCtrl,
+    Spitline
   }
-//  components: {},
 //  computed: {},
 //  mounted: {},
-//  methods: {}
 }
 </script>
 
@@ -136,4 +179,31 @@ export default {
         
         .btnBar
           font-weight :900
+  .prdcInfo
+    padding:18px
+    h3
+      font-weight: 500;
+      font-size: 16px;
+      line-height: 16px;
+      color: #07111b;
+    article
+      padding-left:8px
+      padding-top:6px
+      font-size:12px
+      color:rgb(77,85,93)
+      line-height :24px
+      font-weight:200
+  .ratings
+    .screen
+      padding:18px 18px 14px 18px
+      h3
+        font-weight: 500;
+        font-size: 16px;
+        line-height: 16px;
+        color: #07111b;
+      .ratings-opt
+        span 
+          display:inline-block
+          padding: 8px 12px
+          color:rgb(255,255,255)
 </style>
