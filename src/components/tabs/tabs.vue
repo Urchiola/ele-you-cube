@@ -78,7 +78,7 @@ export default {
       this.index = current
       const component = this.$refs.aboutGoods[current]
       //  有 component 并 有fetch方法
-      if(component && component.fetch) {
+      if (component && component.fetch) {
         component.fetch()
       }
     },

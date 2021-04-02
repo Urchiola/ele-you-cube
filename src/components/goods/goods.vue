@@ -140,18 +140,45 @@ export default {
     onAdd(el) {
       this.$refs.shopCart.drop(el)
     },
+    // 点击显示单个商品
     selectFood(food) {
       // 响应式food,so food赋值给this.selectedFood
       this.selectedFood = food
-      this._showSelectFood() 
+      this._showSelectFood()
+      this._showShopCartSticky() 
     },
     _showSelectFood() {
       this.foodComp = this.foodComp || this.$createFood({
         $props: {
           food: 'selectedFood'
+        },
+        $events: {
+          leave: () => {
+            this._hideShopCartStickyComp()
+          },
+          // 监听cartctrl -> food -> good 
+          add: (el) => {
+            console.log(el)
+            this.ShopCartStickyComp.drop(el)
+          }
         }
       })
       this.foodComp.show()
+    },
+    _showShopCartSticky() {
+      this.ShopCartStickyComp = this.ShopCartStickyComp || this.$createShopCartSticky({
+        $props: {
+          selectFoods: 'selectFoods',
+          minPrice: this.seller.minPrice,
+          deliveryPrice: this.seller.deliveryPrice,
+          fold: true
+        }
+      })
+      this.ShopCartStickyComp.show()
+    },
+    _hideShopCartStickyComp() {
+      console.log(1)
+      this.ShopCartStickyComp.hide()
     }
   },
   computed: {

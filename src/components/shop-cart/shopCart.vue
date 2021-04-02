@@ -112,7 +112,7 @@ export default {
       }
     },
     payClass() {
-      if(!this.totalCount || this.totalPrice< this.minPrice) {
+      if (!this.totalCount || this.totalPrice < this.minPrice) {
         return 'not-enough'
       } else {
         return 'enough'
@@ -125,7 +125,7 @@ export default {
   },
   methods: {
     pay(e) {
-      if(this.totalPrice<this.minPrice) {
+      if (this.totalPrice < this.minPrice) {
         return
       }
       this.$createDialog({
@@ -165,12 +165,11 @@ export default {
         $events: {
           // shop-cart-list 点击蒙层 派发事件监听
           hide: () => {
-            this.listFold = true
-            
+            this.listFold = true 
           },
-          leave: () =>{
+          leave: () => {
             // 当首cartlist 隐藏时，
-            this._hideShopCartSticky();
+            this._hideShopCartSticky()
           },
           // 监听 EVENT_ADD 小球动画
           add: (el) => {
@@ -261,11 +260,11 @@ export default {
     },
     totalCount(newVal) {
       // 当 shopcartlist 展开 并
-      if(!this.listFold && !newVal) {
-       this._hideShopCartList()
+      if (!this.listFold && !newVal) {
+        this._hideShopCartList()
       }
     }
-  },
+  }
 }
 </script>
 

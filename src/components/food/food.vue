@@ -1,5 +1,5 @@
 <template>
-  <transition name='slide' >
+  <transition name='slide' @after-leave ='afterleave' >
     <div class="food-wrap" v-show='visible' >
       <cube-scroll ref ='scroll'>
         <div class="foodheader">
@@ -18,8 +18,9 @@
               <s class="old">¥28</s>
             </div>
             <div class="addDesc">
-              <span class="btncart"  v-show="!food.count"  @click="joinCart()">加入购物车</span>
-              <span class="btnBar" v-show="food.count >0" ><CartCtrl :food="food"/></span>
+              
+              <span class="btnBar"  ><CartCtrl @add="addFood" :food="food"/></span>
+              <transition name='fade'><span class="btncart"   @click="addFirst" v-show="!food.count" >加入购物车</span></transition>
             </div>
           </article>
         </div>
@@ -28,20 +29,35 @@
           <h3>商品介绍</h3>
           <article>{{food.info}}</article>
         </div>
-        <Spitline />
+        <Spitline 
+          
+         />
         <div class="ratings">
           <div class="screen">
             <h3>商品评价</h3>
-            <div class="ratings-opt">
-              <span class="all">全部</span>
-              <span class="good">满意</span>
-              <span class="bad">不满意</span>
-            </div>
-            <div class="ratings-opt-content">
-              <i></i> 只看评价内容
-            </div>
+            <selectType 
+              @select='onSelect'
+              :ratings = 'ratings'
+              :desc = 'desc'
+              :selectType = 'selectType'
+              :onlyContent = 'onlyContent'
+              @toggle = 'onToggle'
+             />
           </div>
-          <div class="ratings-content"></div>
+          <div class="ratings-content">
+            <ul v-show='computedRatings && computedRatings.length'>
+              <li class="rating" v-for="(rating,index) in  computedRatings" :key = 'index'>
+                <div class="timeUser clearfix">
+                  <p class="time fl">{{format(rating.ratetime)}}</p> 
+                  <p class='fr'><span class="usrName">{{rating.username}}</span><img class="usrPic" :src="rating.avatar" alt=""><span class=""></span></p>
+                </div>
+                <div class="content">
+                  <i class="zan icon" :class="{'icon-thumb_up':rating.rateType===0,'icon-thumb_down':rating.rateType===1}" v-show='rating.text'></i><span>{{rating.text}}</span>
+                </div>
+              </li>
+            </ul>
+            <div class="no-rating" v-show="!computedRatings || !computedRatings.length">暂无评价</div>
+          </div>
         </div>
       </cube-scroll>
     </div>
@@ -53,7 +69,13 @@
 import popupMixins from 'common/mixins/mixins'
 import CartCtrl from '../cartCtrl/cartCtrl'
 import Spitline from '../spitLine/spitline'
+import selectType from '../selectType/selectType'
+import moment from 'moment' // 时间戳 转换库 moment.js
 const EVENT_SHOW = 'show'
+const EVENT_LEAVE = 'leave'
+const EVENT_ADD = 'add'
+
+const ALL = 2
 export default {
   name: 'food',
   mixins: [popupMixins],
@@ -67,27 +89,61 @@ export default {
   },
   data() {
     return {
+      desc: { all: '全部', positive: '推荐', nagetive: '吐槽' },
+      selectType: ALL,
+      onlyContent: true
+    }
+  },
+  computed: {
+    ratings() {
+      return this.food.ratings
+    },
+    computedRatings() {
+      let res = []
+      this.food.ratings.forEach((rating) => {
+        if (this.onlyContent && !rating.text) {
+          return
+        }
+        if (this.selectType === ALL || this.selectType === rating.rateType) {
+          res.push(rating)
+        }
+      })
+      return res
     }
   },
   created() {
     // 创建时刷新
-    this.$on(EVENT_SHOW,()=>{
+    this.$on(EVENT_SHOW, () => {
       this.$nextTick(() => {
         this.$refs.scroll.refresh()
       })
     })
   },
   methods: {
-    joinCart() {
-      if (!this.food.count) {
-        // 添加设置属性, vue的api: this.$set vue才可以观测到
-        this.$set(this.food, 'count', 1)
-      } else {
-        this.food.count++
-      }
+    onSelect(type) {
+      this.selectType = type
+    },
+    onToggle() {
+      return (this.onlyContent = !this.onlyContent)
+    },
+    format(time) {
+      return moment(time).format('YYYY-MM-DD hh:mm')
+    },
+    addFirst(event) {
+      // 添加设置属性, vue的api: this.$set vue才可以观测到
+      this.$set(this.food, 'count', 1)
+      this.$emit(EVENT_ADD, event.target)
+    },
+    // 此方法 专接受 cartctrl 组件中的add 方法，再派发到 good组件
+    addFood(target) {
+      this.$emit(EVENT_ADD, target)
+      console.log(target)
     },
     close() {
       this.visible = true
+    },
+    afterleave() {
+      this.$emit(EVENT_LEAVE)
     }
     // 小球动画，
     // onAdd(el) {
@@ -96,7 +152,8 @@ export default {
   },
   components: {
     CartCtrl,
-    Spitline
+    Spitline,
+    selectType
   }
 //  computed: {},
 //  mounted: {},
@@ -170,14 +227,27 @@ export default {
         right:0
         bottom:0
         .btncart
+          position :absolute
+          right:0
+          bottom:8px
           background-color:rgb(0,160,220)
-          padding:6px 12px
-          border-radius:12px
-          line-height :12px
-          font-size:10px
-          color:rgb(255,255,255)
-        
+          z-index: 10
+          padding: 0 12px
+          box-sizing: border-box;
+          border-radius: 12px;
+          font-size: 10px;
+          color: #fff;
+          width: 100px;
+          padding: 6px 12px;
+          text-align: center;
+          &.fade-enter-active,&.fade-leave-active
+            transition:all 0.3s
+          &.fade-enter,&.fade-leave-to
+            opacity :0
         .btnBar
+          position :absolute
+          right:0
+          bottom:0
           font-weight :900
   .prdcInfo
     padding:18px
@@ -194,6 +264,7 @@ export default {
       line-height :24px
       font-weight:200
   .ratings
+    padding-bottom:56px
     .screen
       padding:18px 18px 14px 18px
       h3
@@ -202,8 +273,62 @@ export default {
         line-height: 16px;
         color: #07111b;
       .ratings-opt
+        padding:24px 0 18px 0
+        border-bottom:1px solid rgba(7,17,27,0.1)
         span 
           display:inline-block
+          margin-right:8px
+          font-size:13px
+          border-radius:3px
           padding: 8px 12px
+          height :16px
+          line-height :16px
           color:rgb(255,255,255)
+        span:nth-child(1)
+          background-color :rgb(0,160,220)
+        span:nth-child(2)
+          color :rgb(77,85,92)
+          background-color :rgba(0,160,220,0.2)
+        span:nth-child(3)
+          color :rgb(77,85,92)
+          background-color :rgba(77,85,92,0.2)
+      .ratings-opt-content
+        padding-top:12px
+        font-size:12px
+        line-height :24px
+        i
+          font-size:24px
+          line-height :24px
+        i.check
+          color:rgb(0,160,220)
+        span
+          display: inline-block;
+          vertical-align: top;
+          margin-left:4px
+    .ratings-content
+      border-top:1px solid rgba(7,17,27,0.1)
+      padding:0 18px
+      .rating
+        padding:16px 0
+        border-bottom:1px solid rgba(7,17,27,0.1)
+        .timeUser
+          margin-bottom :6px
+          font-size:10px 
+          .usrPic
+            vertical-align :middle
+            margin-left:6px
+            width:16px
+            height :16px
+            border-radius :50%
+        .content
+          .zan
+            &.icon-thumb_up
+              color:rgb(0,160,220)
+          span 
+            color:rgb(0,0,0)
+            font-size:15px
+            vertical-align :top
+            margin-left:4px
+    .no-rating
+      padding:18px 0
 </style>

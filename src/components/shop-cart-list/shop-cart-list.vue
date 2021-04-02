@@ -61,12 +61,12 @@ export default {
       }
     }
   },
-  created(){
-    this.$on(EVENT_SHOW,() => {
+  created() {
+    this.$on(EVENT_SHOW, () => {
       // 刷新lisfcontent 信息
-      this.$nextTick(()=>{
-        this.$refs.listContent.refresh();
-      });
+      this.$nextTick(() => {
+        this.$refs.listContent.refresh()
+      })
     })
   },
   methods: {
@@ -74,18 +74,18 @@ export default {
       this.hide()
     },
     onLeave() {
-      //配合@after-leave,派发一个事件
+      // 配合@after-leave,派发一个事件
       this.$emit(EVENT_LEAVE)
     },
     onAdd(target) {
-      this.$emit(EVENT_ADD,target)
+      this.$emit(EVENT_ADD, target)
     },
     empty() {
       this.$createDialog({
         type: 'confirm',
         content: '清空购物车吗?',
-        $events:{
-          confirm : () => {
+        $events: {
+          confirm: () => {
             this.selectFoods.forEach((food) => {
               food.count = 0 
             })
