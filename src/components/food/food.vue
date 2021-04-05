@@ -256,6 +256,7 @@ export default {
       font-size: 16px;
       line-height: 16px;
       color: #07111b;
+      
     article
       padding-left:8px
       padding-top:6px
@@ -266,12 +267,13 @@ export default {
   .ratings
     padding-bottom:56px
     .screen
-      padding:18px 18px 14px 18px
+      padding:18px 0 14px 0
       h3
         font-weight: 500;
         font-size: 16px;
         line-height: 16px;
         color: #07111b;
+        margin-left:18px
       .ratings-opt
         padding:24px 0 18px 0
         border-bottom:1px solid rgba(7,17,27,0.1)

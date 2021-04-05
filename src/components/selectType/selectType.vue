@@ -68,9 +68,6 @@ export default {
       return this.$emit(EVENT_SELECT, type)
     },
     toggle() {
-      console.log(1)
-      console.log('emit-toggle')
-      console.log(2)
       return this.$emit(EVENT_TOGGLE)
     }
   }
@@ -81,6 +78,7 @@ export default {
 <style lang='stylus' rel='stylesheet/stylus' scoped>
 // import '' from ''
 .selectType-wrap
+  padding:0 18px
   .selecttype
     border-bottom:1px solid rgba(77,85,93,0.1)
     padding-bottom:18px
@@ -108,6 +106,7 @@ export default {
     .toggleSpan
       display :inline-block
       font-size:12px
+      color:rgb(147,153,159)
       vertical-align :top
       line-height :48px
       

@@ -1,10 +1,20 @@
 <template>
   <cube-scroll ref='scroll' :options="scrollOptions">
     <div class='ratings'>
-      ratingsss
+      <div class="wholeScore">
+        <div class="Score left">
+          <h4>{{seller.score}}</h4>
+          <p class="text">综合评分</p>
+          <p class="up">高于周边商家{{seller.rankRate}}%</p>
+        </div>
+        <div class="Score right">
+          <p><span class="title">商家评分</span><star :size = "36" :score= 'seller.score' /><span>{{seller.score}}</span></p>
+          <p><span class="title">态度评分</span><star :size = "36" :score= 'seller.serviceScore' /><span>{{seller.serviceScore}}</span></p>
+          <p><span class="title">送达时间</span><span>{{seller.deliveryTime}}分钟</span></p>
+        </div>
+      </div>
       <Spitline />
       <div class="screen">
-        <h3>商品评价</h3>
         <selectType 
           :ratings = 'ratings'
           :desc = 'desc'
@@ -36,11 +46,18 @@
 import { getRatings } from 'api'
 import Spitline from '../spitLine/spitline'
 import selectType from '../selectType/selectType'
+import star from '../star/star'
 import moment from 'moment' // 时间戳 转换库 moment.js
+
 const EVENT_SHOW ='show'
 const ALL = 2
 export default {
   name: 'ratings',
+  props: {
+    data: {
+      type:Object
+    }
+  },
   data() {
     return {
       ratings: [],
@@ -55,10 +72,10 @@ export default {
   },
   components: {
     Spitline,
-    selectType
+    selectType,
+    star
   },
   created() {
-    console.log(1)
     // 创建时刷新
     this.$on(EVENT_SHOW, () => {
       this.$nextTick(() => {
@@ -67,7 +84,10 @@ export default {
     })
   },
   computed: {
-    
+    // 传入的data 转换
+    seller() {
+      return this.data.seller || {}
+    },
     computedRatings() {
       let res = []
       this.ratings.forEach((rating) => {
@@ -106,30 +126,65 @@ export default {
 </script>
 
 <style lang='stylus' rel='stylesheet/stylus' scoped>
-.ratings-content
-  border-top:1px solid rgba(7,17,27,0.1)
-  padding:0 18px
-  .rating
-    padding:16px 0
-    border-bottom:1px solid rgba(7,17,27,0.1)
-    .timeUser
-      margin-bottom :6px
-      font-size:10px 
-      .usrPic
-        vertical-align :middle
-        margin-left: 6px
-        width: 16px
-        height: 16px
-        border-radius: 50%
-    .content
-      .zan
-        &.icon-thumb_up
-          color:rgb(0,160,220)
-      span 
-        color:rgb(0,0,0)
-        font-size:15px
-        vertical-align :top
-        margin-left:4px
-.no-rating
-  padding:18px 0
+.ratings
+  .wholeScore
+    padding:18px 14px
+    display:flex
+    .Score
+      
+      flex: 137px 0 0
+      &.left
+        text-align:center
+        border-right:1px solid rgba(7,17,27,.1)
+        h4
+          color:rgb(255,153,0)
+          font-size:24px
+          line-height:28px
+        .text
+          font-size:12px
+          line-height:12px
+          color:rgb(7,17,27)
+          margin:10px 0 12px 0
+        .up
+          font-size: 10px
+          line-height: 10px
+          color:rgb(147,153,159)
+      &.right
+        padding-left:16px
+        p:nth-of-type(2)
+          margin:12px 0
+        .title
+          color:rgb(7,17,27)
+          font-size:12px
+          line-height:18px
+          margin-right :8px
+        >>> .star
+          display :inline-block
+          vertical-align: middle
+  .ratings-content
+    border-top:1px solid rgba(7,17,27,0.1)
+    padding:0 18px
+    .rating
+      padding:16px 0
+      border-bottom:1px solid rgba(7,17,27,0.1)
+      .timeUser
+        margin-bottom :6px
+        font-size:10px 
+        .usrPic
+          vertical-align :middle
+          margin-left: 6px
+          width: 16px
+          height: 16px
+          border-radius: 50%
+      .content
+        .zan
+          &.icon-thumb_up
+            color:rgb(0,160,220)
+        span 
+          color:rgb(0,0,0)
+          font-size:15px
+          vertical-align :top
+          margin-left:4px
+  .no-rating
+    padding:18px 0
 </style>
