@@ -1,9 +1,9 @@
 <template>
   <div class='selectType-wrap'>
     <div class="selecttype">
-      <span @click='select(2)' :class="{'active':selectType===2}" class="block s1">{{desc.all}} <span class="count"></span></span>
-      <span @click='select(0)' :class="{'active':selectType===0}" class="block s2">{{desc.positive}} <span class="count"></span></span>
-      <span @click='select(1)' :class="{'active':selectType===1}" class="block s3">{{desc.nagetive}} <span class="count"></span></span>
+      <span @click='select(2)' :class="{'active':selectType===2}" class="block s1">{{desc.all}} <span class="count">{{ratings.length}}</span></span>
+      <span @click='select(0)' :class="{'active':selectType===0}" class="block s2">{{desc.positive}} <span class="count">{{positives.length}}</span></span>
+      <span @click='select(1)' :class="{'active':selectType===1}" class="block s3">{{desc.nagetive}} <span class="count">{{nagetives.length}}</span></span>
     </div>
     <div class="toggleContent" @click.prevent= 'toggle'>
       <i class="icon icon-check_circle " :class="{'check':onlyContent }"></i><span class="toggleSpan">只看内容的评价</span>

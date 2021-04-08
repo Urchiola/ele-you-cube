@@ -8,8 +8,8 @@
           <p class="up">高于周边商家{{seller.rankRate}}%</p>
         </div>
         <div class="Score right">
-          <p><span class="title">商家评分</span><star :size = "36" :score= 'seller.score' /><span>{{seller.score}}</span></p>
-          <p><span class="title">态度评分</span><star :size = "36" :score= 'seller.serviceScore' /><span>{{seller.serviceScore}}</span></p>
+          <p><span class="title">商家评分</span><star :size = "36" :score= 'seller.score' /><span class='score'>{{seller.score}}</span></p>
+          <p><span class="title">态度评分</span><star :size = "36" :score= 'seller.serviceScore' /><span class='score'>{{seller.serviceScore}}</span></p>
           <p><span class="title">送达时间</span><span>{{seller.deliveryTime}}分钟</span></p>
         </div>
       </div>
@@ -49,13 +49,13 @@ import selectType from '../selectType/selectType'
 import star from '../star/star'
 import moment from 'moment' // 时间戳 转换库 moment.js
 
-const EVENT_SHOW ='show'
+const EVENT_SHOW = 'show'
 const ALL = 2
 export default {
   name: 'ratings',
   props: {
     data: {
-      type:Object
+      type: Object
     }
   },
   data() {
@@ -132,7 +132,7 @@ export default {
     display:flex
     .Score
       
-      flex: 137px 0 0
+      flex: 130px 0 0
       &.left
         text-align:center
         border-right:1px solid rgba(7,17,27,.1)
@@ -161,6 +161,12 @@ export default {
         >>> .star
           display :inline-block
           vertical-align: middle
+        .score
+          font-size:12px
+          color:rgb(255,153,0)
+          line-height :18px
+          margin-left :8px
+          vertical-align :bottom
   .ratings-content
     border-top:1px solid rgba(7,17,27,0.1)
     padding:0 18px

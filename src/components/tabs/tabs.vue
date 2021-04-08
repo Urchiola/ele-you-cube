@@ -39,13 +39,13 @@ export default {
     },
     innitialIndex: {
       type: Number,
-      default: 0
+      default :2
     }
   },
   data() {
     return {
       // 标题
-      index: this.innitialIndex,
+      index:2,// this.innitialIndex,
       // scroll 需默认配置数据
       slideOptions: {
         listenScroll: true, //  监听滚动开
@@ -53,7 +53,7 @@ export default {
         directionLockThreshold: 0 /* 同时水平和垂直滚动时锁定y方向 */
       },
       scrollOptions: {
-        directionLockThreshold: 0 /* 同时水平和垂直滚动时锁定x方向 */
+        // directionLockThreshold: 0 /* 同时水平和垂直滚动时锁定x方向 */
       }
     }
   },

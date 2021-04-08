@@ -75,10 +75,10 @@ export default {
     &.special
       bg-image('special_2')
   .icon-3
-    width: 12px
-    height: 12px
+    width: 20px
+    height: 20px
     margin-right: 2px
-    background-size:12px 12px
+    background-size:20px 20px
     background-repeat :no-repeat
     &.decrease
       bg-image('decrease_3')
