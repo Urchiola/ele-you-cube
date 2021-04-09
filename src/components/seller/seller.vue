@@ -204,12 +204,13 @@ export default {
   .activity
     padding:18px            
     .active-info
+      word-wrap: break-word
       padding:8px 12px 16px 12px
       font-size:12px
       font-weight :200
       color:rgb(200,20,20)
       line-height:24px
-      
+      white-space:break-spaces
     .active-list
       .active-item
         padding:16px
@@ -247,4 +248,8 @@ export default {
         height:32px
         color:rgb(7,17,27)
         border-top:1px solid rgba(7,17,27,0.1)
+        text-overflow: ellipsis
+        white-space: nowrap
+        overflow: hidden
+        
 </style>
