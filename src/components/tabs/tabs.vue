@@ -39,13 +39,13 @@ export default {
     },
     innitialIndex: {
       type: Number,
-      default :2
+      default: 2
     }
   },
   data() {
     return {
       // 标题
-      index:2,// this.innitialIndex,
+      index: 2, // this.innitialIndex,
       // scroll 需默认配置数据
       slideOptions: {
         listenScroll: true, //  监听滚动开

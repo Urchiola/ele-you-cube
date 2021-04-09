@@ -37,6 +37,7 @@
       </div>
       <spitline />
       <div class="activity">
+        
         <h3 class="common-title">公告与活动</h3>
         <article class="active-info">{{seller.bulletin}}</article>
         <ul class="active-list">
@@ -72,7 +73,7 @@
 </template>
 
 <script>
-//  import '' from ''
+import {saveTOLocal,getFromLocal} from 'common/js/storage.js'
 import Spitline from '../spitLine/spitline'
 import star from '../star/star'
 import supportIco from '../support-ico/support-ico'
@@ -106,12 +107,14 @@ export default {
     star,
     supportIco
   },
+  created() {
+    this.favorite = getFromLocal(2, 'favorite')
+  },
   computed: {
     seller() {
       return this.data.seller || {}
     },
     favoriteText() {
-      
       return this.favorite?'已收藏':'收藏'
     }
   },
@@ -124,6 +127,9 @@ export default {
 
       //JSON.stringify(object) // 将对象成json字符串序列
       // JSON.parse(str) // 将json字符串序列 成 对象
+      
+      // this.seller.id , favorite,false
+      saveTOLocal(2, 'favorite', !this.favorite)
       return this.favorite = !this.favorite
     }
   }
@@ -203,8 +209,7 @@ export default {
       font-weight :200
       color:rgb(200,20,20)
       line-height:24px
-      word-wrap:break-word
-      overflow: hidden
+      
     .active-list
       .active-item
         padding:16px
